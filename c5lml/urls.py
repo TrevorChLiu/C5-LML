@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include("core.urls")),
     path("forum/", include("forum.urls")),
     path("leaderboard/", include("leaderboard.urls")),
+    path("user/", include("user.urls"))
 ]

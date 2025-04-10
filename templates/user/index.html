@@ -1,0 +1,26 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+
+    <title>Multiple user login</title>
+  </head>
+  <body>
+    {% include "core/navbar.html" %}
+    
+        <h1>Welcome</h1>
+    </div>
+    <label>Log in if you already have registered!</label>
+    <div class="form-group last mb-4">
+        <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'user:login' %}">login</a></button></div>
+    </div>
+    <label>If not register here!</label>
+    <div class="form-group last mb-4">
+        <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'user:register' %}">register</a></button></div>
+    </div>
+  </body>
+</html>
