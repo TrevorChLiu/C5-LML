@@ -26,26 +26,26 @@
             </a>
           </p>
           <div class="collapse" id="collapseExample">
-            <div class="card card-body">
+            <div class="card card-body green-200">
               <form method="POST">
                 {% csrf_token %}
                 <h5 class="card-title">Change Username</h5>
                 {{ username_form.as_p }}
-                <input type="submit" value="Change Username" class="btn btn-primary">
+                <input type="submit" name="change_username" value="Change Username" class="btn btn-primary">
               </form>
   
               <form method="POST" style="margin-top: 20px;">
                 {% csrf_token %}
                 <h5 class="card-title">Change Email</h5>
                 {{ email_form.as_p }}
-                <input type="submit" value="Change Email" class="btn btn-primary">
+                <input type="submit" name="change_email" value="Change Email" class="btn btn-primary">
               </form>
 
               <form method="POST" style="margin-top: 20px;">
                 {% csrf_token %}
                 <h5 class="card-title">Change Password</h5>
                 {{ password_form.as_p }}
-                <input type="submit" value="Change Password" class="btn btn-primary">
+                <input type="submit" name="change_password" value="Change Password" class="btn btn-primary">
             </form>
             
 

@@ -44,24 +44,31 @@ def login_view(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        
-        username_form = ChangeUsernameForm(request.POST, instance=request.user)
-        email_form = ChangeEmailForm(request.POST, instance=request.user)
-        password_form = PasswordChangeForm(request.user, request.POST)
+        if 'change_username' in request.POST:
+            username_form = ChangeUsernameForm(request.POST, instance=request.user)
+            email_form = ChangeEmailForm(instance=request.user)
+            password_form = PasswordChangeForm(request.user)
+            if username_form.is_valid():
+                username_form.save()
+                return redirect('user:profile')
 
+        elif 'change_email' in request.POST:
+            username_form = ChangeUsernameForm(instance=request.user)
+            email_form = ChangeEmailForm(request.POST, instance=request.user)
+            password_form = PasswordChangeForm(request.user)
+            if email_form.is_valid():
+                email_form.save()
+                return redirect('user:profile')
 
-        if username_form.is_valid():
-            username_form.save()
+        elif 'change_password' in request.POST:
+            username_form = ChangeUsernameForm(instance=request.user)
+            email_form = ChangeEmailForm(instance=request.user)
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                return redirect('user:profile')
 
-        if email_form.is_valid():
-            email_form.save()
-
-        if password_form.is_valid():
-            user = password_form.save()
-            update_session_auth_hash(request, user)
-
-        
-        return redirect('user:profile')
     else:
         username_form = ChangeUsernameForm(instance=request.user)
         email_form = ChangeEmailForm(instance=request.user)

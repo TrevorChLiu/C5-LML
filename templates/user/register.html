@@ -2,12 +2,12 @@
 {% load static %}
 <html lang="en">
   <head>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     {% include "core/navbar.html" %}
-    <title>Multiple user login</title>
+    <title>Register</title>
   </head>
   <body class="purple-900">
   <div class="content">
@@ -20,7 +20,7 @@
                   <div class="mb-4">
                       <h1 style="size: 50px;" class="text-light">Join us and find more!</h1>
                 </div>
-                  
+
                 <form  method="post">
                     {% csrf_token %}
                   <div class="form-group first mb-4">
@@ -39,7 +39,7 @@
                     <label for="password" class="text-light">Confirm Password</label>
                       {{ form.password2 }}
                   </div>
-                  
+
                     <span class="text-error text-light">{{ form.errors }}</span>
                   <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary">
                 </form>
