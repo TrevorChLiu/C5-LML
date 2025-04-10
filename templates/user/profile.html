@@ -14,7 +14,7 @@
         <div class="card-header">
             <h5>Profile</h5>
         </div>
-        <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'core/images/placeholder1.png' %}{% endif %}" 
+        <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'core/images/default_avatar.png' %}{% endif %}" 
      class="card-img-top mx-auto d-block" style="max-width: 200px;" alt="Avatar">
 
 
