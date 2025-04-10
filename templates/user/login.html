@@ -8,7 +8,7 @@
 
     <title>Multiple user login</title>
   </head>
-  <body>
+  <body class="purple-900">
     {% include "core/navbar.html" %}
   <div class="content">
     <div class="container">
@@ -21,34 +21,29 @@
                   <div class="mb-4">
                 </div>
 
-              <span class="mb-0 text-muted">
-                {% if msg %}
-                    {{ msg | safe }}
-                {% else %}
-                    Login page
-                {% endif %}
-              </span>
-                <form  method="post">
+                <h1 style="size: 50px;" class="text-light">Login and find more!</h1>
+              
+
+                <form  method="post" class="mt-4">
                     {% csrf_token %}
                   <div class="form-group first">
-                    <label for="username">Username</label>
+                    <label for="username" class="text-light">Username</label>
                       {{ form.username }}
                   </div>
                   <div class="form-group last mb-4">
-                    <label for="username">Password</label>
+                    <label for="username" class="text-light">Password</label>
                     {{ form.password }}
                   </div>
 
-                  <div class="d-flex mb-5 align-items-center">
-                    <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                      <input type="checkbox" checked="checked"/>
-                      <div class="control__indicator"></div>
-                    </label>
-                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
-                  </div>
-
-                  <input type="submit" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
+                  <input type="submit" value="Log In" class="btn btn-pill text-white btn-block cyan-700">
                 </form>
+
+
+                <span class="mt-4 text-muted">
+                  {% if msg %}
+                      <strong class="text-light">Wrong password or User ID!</strong>
+                  {% endif %}
+                </span>
               </div>
             </div>
           </div>

@@ -11,15 +11,16 @@ def register(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            login(request, user)
             msg = 'user created'
-            return redirect('user:login')
+            return redirect('core:home')
         else:
             msg = 'form is not valid'
     else:
         form = SignUpForm()
     return render(request,'user/register.html', {'form': form, 'msg': msg})
 
-def login(request):
+def login_view(request):
     form = LoginForm(request.POST or None)
     msg = None
     if request.method == 'POST':
@@ -28,9 +29,13 @@ def login(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
+                login(request, user)
                 return redirect('core:home')
             else:
                 msg= 'invalid credentials'
         else:
             msg = 'error validating form'
     return render(request, 'user/login.html', {'form': form, 'msg': msg})
+
+def profile(request):
+    return render(request, 'user/profile.html')
