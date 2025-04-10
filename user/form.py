@@ -61,3 +61,11 @@ class ChangeEmailForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email']
+
+class ChangeProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['profile_image']
+        widgets = {
+            'profile_image': forms.FileInput(attrs={'class': 'form-control'}),
+        }

@@ -14,38 +14,49 @@
         <div class="card-header">
             <h5>Profile</h5>
         </div>
-        <img src="{% static 'core/images/placeholder1.png' %}" class="card-img-top mx-auto d-block" style="max-width: 200px;" alt="Avatar">
+        <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'core/images/placeholder1.png' %}{% endif %}" 
+     class="card-img-top mx-auto d-block" style="max-width: 200px;" alt="Avatar">
+
 
         <div class="card-body">
         <h5 class="card-title">{{ user.username }}</h5>
         <p class="card-text">{{ user.email }}</p>
 
         <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn cyan-700" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
               Edit Profile
             </a>
           </p>
           <div class="collapse" id="collapseExample">
             <div class="card card-body green-200">
+
+              <form method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
+                {% csrf_token %}
+                <h5 class="card-title">Change Profile Image</h5>
+                {{ image_form.as_p }}
+                <input type="submit" name="change_image" value="Upload Image" class="btn orange-700">
+              </form>
+              
+
               <form method="POST">
                 {% csrf_token %}
                 <h5 class="card-title">Change Username</h5>
                 {{ username_form.as_p }}
-                <input type="submit" name="change_username" value="Change Username" class="btn btn-primary">
+                <input type="submit" name="change_username" value="Change Username" class="btn orange-700">
               </form>
   
               <form method="POST" style="margin-top: 20px;">
                 {% csrf_token %}
                 <h5 class="card-title">Change Email</h5>
                 {{ email_form.as_p }}
-                <input type="submit" name="change_email" value="Change Email" class="btn btn-primary">
+                <input type="submit" name="change_email" value="Change Email" class="btn orange-700">
               </form>
 
               <form method="POST" style="margin-top: 20px;">
                 {% csrf_token %}
                 <h5 class="card-title">Change Password</h5>
                 {{ password_form.as_p }}
-                <input type="submit" name="change_password" value="Change Password" class="btn btn-primary">
+                <input type="submit" name="change_password" value="Change Password" class="btn orange-700">
             </form>
             
 

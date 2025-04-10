@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .form import SignUpForm, LoginForm, ChangeUsernameForm, ChangeEmailForm
+from .form import SignUpForm, LoginForm, ChangeUsernameForm, ChangeEmailForm, ChangeProfileImageForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -68,14 +68,25 @@ def profile(request):
                 user = password_form.save()
                 update_session_auth_hash(request, user)
                 return redirect('user:profile')
+            
+        elif 'change_image' in request.POST:
+            username_form = ChangeUsernameForm(instance=request.user)
+            email_form = ChangeEmailForm(instance=request.user)
+            password_form = PasswordChangeForm(request.user)
+            image_form = ChangeProfileImageForm(request.POST, request.FILES, instance=request.user)
+            if image_form.is_valid():
+                image_form.save()
+                return redirect('user:profile')
 
     else:
         username_form = ChangeUsernameForm(instance=request.user)
         email_form = ChangeEmailForm(instance=request.user)
         password_form = PasswordChangeForm(request.user)
+        image_form = ChangeProfileImageForm(instance=request.user)
 
     return render(request, 'user/profile.html', {
         'username_form': username_form,
         'email_form': email_form,
-        'password_form': password_form
+        'password_form': password_form,
+        'image_form': image_form
     })
