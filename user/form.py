@@ -50,4 +50,22 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'is_admin')
+        fields = ('username', 'email', 'password1', 'password2')
+
+class ChangeUsernameForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username']
+
+class ChangeEmailForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email']
+
+class ChangeProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['profile_image']
+        widgets = {
+            'profile_image': forms.FileInput(attrs={'class': 'form-control'}),
+        }

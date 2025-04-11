@@ -1,0 +1,125 @@
+{% include "core/navbar.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>  
+</head>
+<body class="purple-900">
+
+  <!-- Personal information -->
+<div class="container text-center">
+    <div class="card green-200" aria-hidden="true">
+        <div class="card-header">
+            <h5>Profile</h5>
+        </div>
+        <img src="{% if other_user.profile_image %}{{ other_user.profile_image.url }}{% else %}{% static 'core/images/default_avatar.png' %}{% endif %}" 
+     class="card-img-top mx-auto d-block" style="width: 150px; height: 150px;" alt="Avatar">
+
+
+        <div class="card-body">
+        <h5 class="card-title">{{ other_user.username }}</h5>
+        <p class="card-text">{{ other_user.email }}</p>
+
+          <!-- Follow infomation -->
+          <div class="d-flex justify-content-center gap-3 mb-3">
+          <button class="btn cyan-700" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDark" aria-controls="offcanvasWithBothOptions">Following</button>
+          
+          <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" tabindex="-1" id="offcanvasDark" aria-labelledby="offcanvasDarkLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasDarkLabel">Following</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvasDark" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+              {% for followee in other_user.get_followees %}
+
+              
+              <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+
+                    <a href="{% url 'user:other_profile' followee.id %}">
+                    <img src="{% if followee.profile_image %}{{ followee.profile_image.url }}{% else %}{% static 'core/images/default_avatar.png' %}{% endif %}" 
+                    class="img-fluid rounded-start" style="width: 150px; height: 150px;" alt="...">
+                  </a>
+                  
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ followee.username }}</h5>
+                      <p class="card-text">{{ followee.email }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+
+            {% endfor %}
+
+            </div>
+          </div>
+
+          
+
+          <button class="btn cyan-700" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Followers</button>
+
+          <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              
+              {% for follower in other_user.get_followers %}
+
+              <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+
+                    <a href="{% url 'user:other_profile' follower.id %}">
+                    <img src="{% if follower.profile_image %}{{ follower.profile_image.url }}{% else %}{% static 'core/images/default_avatar.png' %}{% endif %}" 
+                    class="img-fluid rounded-start" style="width: 150px; height: 150px;" alt="...">
+                  </a>
+
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ follower.username }}</h5>
+                      <p class="card-text">{{ follower.email }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            {% endfor %}
+
+            </div>
+          </div>
+          </div>
+
+
+        <p class="d-inline-flex gap-1">
+          {% if user.is_authenticated and user != other_user %}
+          <form method="POST" action="{% url 'user:toggle_follow' other_user.id %}">
+            {% csrf_token %}
+            {% if other_user in user.get_followees %}
+              <button class="btn cyan-500" type="submit">Unfollow</button>
+            {% else %}
+              <button class="btn cyan-500" type="submit">Follow</button>
+            {% endif %}
+          </form>
+        {% endif %}
+          </p>
+
+        
+
+        </div>
+  </div>  
+</div>
+
+</body>
+</html>
