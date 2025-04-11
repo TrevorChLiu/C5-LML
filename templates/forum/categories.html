@@ -5,12 +5,15 @@
 </head>
 <body>
   {% include "core/navbar.html" %}
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Categories Page</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">Fill in this page.</h6>
-          <p class="card-text">This is a placeholder.</p>
-        </div>
+      <div class="container mt-4">
+        <h2>Create a Forum</h2>
+    
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+    
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
 </body>
 </html>
