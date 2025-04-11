@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .form import SignUpForm, LoginForm, ChangeUsernameForm, ChangeEmailForm, ChangeProfileImageForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserChangeForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from .models import User, Follow
 
 
 def index(request):
@@ -90,3 +92,24 @@ def profile(request):
         'password_form': password_form,
         'image_form': image_form
     })
+
+def other_profile(request, user_id):
+    other_user = get_object_or_404(User, id=user_id)
+    return render(request, 'user/other_profile.html', {'other_user': other_user})
+
+@login_required
+def toggle_follow(request, user_id):
+    other_user = get_object_or_404(User, id=user_id)
+    
+    follow_record = Follow.objects.filter(follower=request.user, followee=other_user).first()
+
+    if follow_record:
+        follow_record.delete()  # Unfollow
+    else:
+        if request.user != other_user:
+            Follow.objects.create(follower=request.user, followee=other_user)  # Follow
+
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    return redirect('core:home')
