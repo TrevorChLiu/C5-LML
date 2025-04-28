@@ -21,5 +21,13 @@ class Forum(models.Model):
     def get_top_100_forums():
         return Forum.objects.order_by('-popularity')[:100]
     
+    def get_all_forums_sorted_by_popularity():
+        return Forum.objects.order_by('-popularity')
+
+    def get_all_forums_sorted_by_name():
+        return Forum.objects.order_by('name')
+
+
+    
     def __str__(self):
         return self.name

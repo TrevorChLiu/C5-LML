@@ -1,0 +1,43 @@
+{% include "core/navbar.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Games</title>
+</head>
+
+<body class="purple-900 text-light">
+
+    <div class="container mt-4">
+        <h2>Search Results</h2>
+      
+        {% if query %}
+          <p>Showing results for "<strong>{{ query }}</strong>":</p>
+        {% endif %}
+      
+        {% if results %}
+          <div class="row">
+            {% for game in results %}
+              <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                  <img src="{{ game.key_art.url }}" class="card-img-top" alt="{{ game.name }}">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ game.name }}</h5>
+                    <p class="card-text">{{ game.description|truncatewords:20 }}</p>
+                    <p><strong>Popularity:</strong> {{ game.popularity }}</p>
+                    <p><strong>Price:</strong> ${{ game.price }}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>No results found.</p>
+        {% endif %}
+      </div>
+      
+
+</body>
+</html>
+
+

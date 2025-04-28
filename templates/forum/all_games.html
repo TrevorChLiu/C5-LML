@@ -1,0 +1,35 @@
+{% include "core/navbar.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Games</title>
+</head>
+
+<body class="purple-900">
+
+    <div class="container-fluid">
+        <div class="row">
+          {% for game in games %}
+            <div class="col-md-4 mb-4">
+              <div class="card" style="width: 100%;">
+                <img src="{{ game.key_art.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ game.name }}</h5>
+                  <p class="card-text">{{ game.description|truncatewords:20 }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Popularity: {{ game.popularity }}</li>
+                  <li class="list-group-item">Price: ${{ game.price }}</li>
+                </ul>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+
+</body>
+</html>
+
+
