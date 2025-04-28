@@ -94,7 +94,7 @@
         <li class="list-group-item red-900" style="border-color: black;">
             <div style="display: flex; justify-content: space-between; align-items: center; position: relative;">
         
-                <a href="" style="display: flex; align-items: center; text-decoration: none;">
+                <a href="{% url 'forum:forum' forum.id %}" style="display: flex; align-items: center; text-decoration: none;">
                     <img src={{ forum.key_art.url }} width="160" height="90" style="margin-right: 8px;">
                     <span style="font-size: 18px; color: gray;">{{ forum.name }}</span>
                 </a>
