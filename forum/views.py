@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseForbidden
 from .models import Post, Comment, Mention
-from django.contrib.auth.models import User
+from user.models import User
     
 def categories(request):
     if request.method == 'POST':
@@ -57,26 +57,29 @@ def forum(request, forum_id):
     })
 
 @login_required
-def post_create(request):
+def post_create(request, forum_id):
+    forum = get_object_or_404(Forum, id=forum_id)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.forum = forum
             post.save()
-            return redirect('forum')
+            return redirect('forum:forum', forum_id=forum_id)
     else:
         form = PostForm()
-    return render(request, 'forum/post_form.html', {'form': form})
+    return render(request, 'forum/post_form.html', {'form': form, 'forum':forum})
 
-def post_detail(request, pk):
+def post_detail(request, forum_id, pk):
     post = get_object_or_404(Post, pk=pk)
+    forum = get_object_or_404(Forum, id=forum_id)
     post.views += 1
     post.save()
     
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return redirect('login')
+            return redirect('user:login')
         form = CommentForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -90,14 +93,15 @@ def post_detail(request, pk):
                     Mention.objects.create(user=user, comment=comment)
                 except User.DoesNotExist:
                     pass
-            return redirect('post_detail', pk=pk)
+            return redirect('forum:post_detail', pk=pk, forum_id=forum_id)
     else:
         form = CommentForm()
     
     return render(request, 'forum/post_detail.html', {
         'post': post,
         'form': form,
-        'comments': post.comment_set.filter(parent_comment__isnull=True)
+        'comments': post.comments.filter(parent_comment__isnull=True),
+        'forum':forum
     })
 
 @login_required
@@ -115,19 +119,19 @@ def like_post(request, post_id):
     })
 
 @login_required
-def delete_comment(request, comment_id):
+def delete_comment(request, comment_id, forum_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if request.user == comment.author or request.user.is_superuser:
         comment.delete()
-    return redirect('post_detail', pk=comment.post.id)
+    return redirect('forum:post_detail', pk=comment.post.id, forum_id=forum_id)
 
 @login_required
-def delete_post(request, pk):
+def delete_post(request, forum_id, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user != post.author and not request.user.is_superuser:
         return HttpResponseForbidden("无权删除此帖子")
     post.delete()
-    return redirect('forum')
+    return redirect('forum:forum', forum_id=forum_id)
 
 def extract_mentions(text):
     import re

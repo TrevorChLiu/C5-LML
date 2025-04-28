@@ -15,7 +15,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">发布</button>
-                <a href="{% url 'index' %}" class="btn btn-secondary">返回首页</a>
+                <a href="{% url 'forum:forum' forum.id %}" class="btn btn-secondary">返回首页</a>
             </form>
         </div>
     </div>

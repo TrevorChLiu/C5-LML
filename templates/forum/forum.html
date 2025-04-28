@@ -38,7 +38,7 @@
       </div>
 
     <div class="container-fluid p-4">
-    <a href="{% url 'forum:post_create' %}" class="btn btn-primary mb-3">发新帖</a>
+    <a href="{% url 'forum:post_create' forum.id %}" class="btn btn-primary mb-3">发新帖</a>
     
     <div class="sorting">
         <strong>排序方式：</strong>
@@ -49,7 +49,7 @@
     <div class="row">
         {% for post in page_obj %}
         <div class="col-md-4 mb-4">
-            <a href="{% url 'forum:post_detail' post.pk %}" class="card-link">
+            <a href="{% url 'forum:post_detail' forum.id post.pk %}" class="card-link">
                 <div class="card h-100">
                     {% if post.image %}
                     <img src="{{ post.image.url }}" class="card-img-top" alt="帖子图片">
