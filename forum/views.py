@@ -45,8 +45,8 @@ def results(request):
 
 def forum(request, forum_id):
     forum = get_object_or_404(Forum, id=forum_id)
-    post_list = forum.posts.all().order_by('-created_at')
     order_by = request.GET.get('order_by', '-created_at')
+    post_list = forum.posts.all().order_by(order_by)
     paginator = Paginator(post_list, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
