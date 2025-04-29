@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.apps import apps
 
 class User(AbstractUser):
     is_admin = models.BooleanField('is_admin', default=False)
@@ -12,6 +13,18 @@ class User(AbstractUser):
     
     def get_followers(self):
         return User.objects.filter(followees__followee=self).order_by('-followees__date_added')
+    
+    def get_liked_posts(self):
+        Post = apps.get_model('forum', 'Post')
+        return Post.objects.filter(likes=self).order_by('-created_at')
+
+    def get_my_posts(self):
+        return self.post_set.all().order_by('-created_at')
+
+    def get_my_comments(self):
+        return self.comment_set.all().order_by('-created_at')
+    
+    
 
 
 class Follow(models.Model):

@@ -16,7 +16,9 @@
     
           <div class="carousel-item active" data-bs-interval="2000">
             <div class="card gray-900" style="width: 30rem;">
+              <a href="{% url 'forum:forum' top1.id %}">
                 <img src={{ top1.key_art.url }} class="card-img-top" alt="...">
+              </a>
                 <div class="card-body">
                   <h5 class="card-title text-light">{{ top1.name }}</h5>
                   <p class="d-inline-flex gap-1">
@@ -37,7 +39,9 @@
           {% for forum in top2_to_top5 %}
           <div class="carousel-item" data-bs-interval="2000">
             <div class="card gray-900" style="width: 30rem;">
+              <a href="{% url 'forum:forum' forum.id %}">
                 <img src={{ forum.key_art.url }} class="card-img-top" alt="...">
+              </a>
                 <div class="card-body">
                     <h5 class="card-title text-light">{{ forum.name }}</h5>
                   <p class="d-inline-flex gap-1">
@@ -94,7 +98,7 @@
         <li class="list-group-item red-900" style="border-color: black;">
             <div style="display: flex; justify-content: space-between; align-items: center; position: relative;">
         
-                <a href="" style="display: flex; align-items: center; text-decoration: none;">
+                <a href="{% url 'forum:forum' forum.id %}" style="display: flex; align-items: center; text-decoration: none;">
                     <img src={{ forum.key_art.url }} width="160" height="90" style="margin-right: 8px;">
                     <span style="font-size: 18px; color: gray;">{{ forum.name }}</span>
                 </a>

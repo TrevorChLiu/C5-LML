@@ -23,20 +23,24 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item ">
-            <a class="nav-link active" aria-current="page" href="{% url 'forum:categories' %}">Categories</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'forum:all_games' %}">All games</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Leaderboard
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'leaderboard:example' %}">Leaderboard Example 1</a></li>
-              <li><a class="dropdown-item" href="#">Leaderboard Example 2</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Leaderboard Example 3</a></li>
-            </ul>
+          <li class="nav-item ">
+            <a class="nav-link active" aria-current="page" href="{% url 'forum:leaderboard' %}">Leaderboard</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link active" aria-current="page" href="{% url 'forum:categories' %}">New game</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link active" aria-current="page" href="{% url 'core:detail' %}">About us</a>
           </li>
         </ul>
+
+        <form class="d-flex mx-auto" role="search" method="get" action="{% url 'forum:results' %}">
+          <input class="form-control me-2" type="search" placeholder="Search" name="q" value="{{ request.GET.q }}">
+          <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>        
+        
         {% if user.is_authenticated %}
         <a class="nav-link link-light" aria-current="page" href="{% url 'user:profile' %}"><strong>Profile</strong></a>
         {% else %}

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from forum.models import Forum
 
-# Create your views here.
 def home(request):
     top_1_forum = Forum.get_top_1_forum()
     top_5_forums = Forum.get_top_5_forums()
@@ -12,3 +11,6 @@ def home(request):
         'top2_to_top5': top_5_forums[1:],
         'top100': top_100_forums
     })
+
+def detail(request):
+    return render(request, 'core/detail.html')
