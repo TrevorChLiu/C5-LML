@@ -16,7 +16,9 @@
     
           <div class="carousel-item active" data-bs-interval="2000">
             <div class="card gray-900" style="width: 30rem;">
+              <a href="{% url 'forum:forum' top1.id %}">
                 <img src={{ top1.key_art.url }} class="card-img-top" alt="...">
+              </a>
                 <div class="card-body">
                   <h5 class="card-title text-light">{{ top1.name }}</h5>
                   <p class="d-inline-flex gap-1">
@@ -37,7 +39,9 @@
           {% for forum in top2_to_top5 %}
           <div class="carousel-item" data-bs-interval="2000">
             <div class="card gray-900" style="width: 30rem;">
+              <a href="{% url 'forum:forum' forum.id %}">
                 <img src={{ forum.key_art.url }} class="card-img-top" alt="...">
+              </a>
                 <div class="card-body">
                     <h5 class="card-title text-light">{{ forum.name }}</h5>
                   <p class="d-inline-flex gap-1">

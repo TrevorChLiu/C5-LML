@@ -20,7 +20,7 @@
     <div class="container my-4">
     <!-- 添加“回到论坛”模块 -->
     <h1 class="mb-4">
-        <a href="{% url 'forum:forum' forum.id %}" class="text-decoration-none text-dark">回到论坛</a>
+        <a href="{% url 'forum:forum' forum.id %}" class="text-decoration-none text-dark">Back to Forum</a>
     </h1>
 
     <div class="card mb-4">
@@ -29,43 +29,43 @@
             {% if user == post.author or user.is_superuser %}
             <a href="{% url 'forum:delete_post' forum.id post.pk %}" 
                class="btn btn-danger btn-sm" 
-               onclick="return confirm('确认删除该帖子？')">删除帖子</a>
+               onclick="return confirm('Confirm delete this post? ')">Delete</a>
             {% endif %}
         </div>
         <div class="card-body">
-            <p class="text-muted">作者：{{ post.author.username }} | {{ post.created_at|date:"Y-m-d H:i" }}</p>
+            <p class="text-muted">Author: <a href="{% url 'user:other_profile' post.author.id %}">{{ post.author.username }}</a> | {{ post.created_at|date:"Y-m-d H:i" }}</p>
             <div class="content mb-3">
                 <!-- 使用 linebreaks 过滤器将换行符转换为 <br> -->
                 <p>{{ post.content|linebreaks }}</p>
                 {% if post.image %}
-                <img src="{{ post.image.url }}" alt="帖子图片" class="img-fluid rounded post-image">
+                <img src="{{ post.image.url }}" alt="Post image" class="img-fluid rounded post-image">
                 {% endif %}
             </div>
             <div class="likes">
                 <button id="like-btn" class="btn btn-outline-primary btn-sm" data-post-id="{{ post.id }}">
-                    {% if user in post.likes.all %} 取消赞 {% else %} 点赞 {% endif %}
+                    {% if user in post.likes.all %} Unlike {% else %} Like {% endif %}
                 </button>
-                <span id="total-likes" class="ms-2">{{ post.likes.count }}</span> 人点赞
+                <span id="total-likes" class="ms-2">{{ post.likes.count }}</span> Likes
             </div>
         </div>
     </div>
 
     <div class="card mb-4">
         <div class="card-header">
-            <h3 class="h6 mb-0">评论（{{ post.comment_set.count }}）</h3>
+            <h3 class="h6 mb-0">Comments ({{ post.comment_set.count }}) </h3>
         </div>
         <div class="card-body">
             <div class="comments">
                 {% for comment in comments %}
                 <div class="comment mb-3">
-                    <p><strong>{{ comment.author.username }}</strong>：{{ comment.content }}</p>
+                    <p><strong><a href="{% url 'user:other_profile' comment.author.id %}">{{ comment.author.username }}</a></strong>：{{ comment.content }}</p>
                     {% if comment.image %}
-                    <img src="{{ comment.image.url }}" alt="评论图片" class="img-fluid rounded comment-image">
+                    <img src="{{ comment.image.url }}" alt="Comment image" class="img-fluid rounded comment-image">
                     {% endif %}
                     <div class="actions mt-2">
-                        <button class="btn btn-outline-secondary btn-sm" onclick="replyTo('{{ comment.author.username }}')">回复</button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="replyTo('{{ comment.author.username }}')">Reply</button>
                         {% if comment.author == user or user.is_superuser %}
-                        <a href="{% url 'forum:delete_comment' forum.id comment.id %}" class="btn btn-outline-danger btn-sm">删除</a>
+                        <a href="{% url 'forum:delete_comment' forum.id comment.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
                         {% endif %}
                     </div>
                     {% if comment.comment_set.all %}
@@ -81,7 +81,7 @@
 
     <div class="card mb-4">
         <div class="card-header">
-            <h3 class="h6 mb-0">请输入你的评论</h3>
+            <h3 class="h6 mb-0">Enter Your Comment</h3>
         </div>
         <div class="card-body">
             <form method="post" enctype="multipart/form-data">
@@ -92,7 +92,7 @@
                 <div class="mb-3">
                     {{ form.image }}
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm">提交评论</button>
+                <button type="submit" class="btn btn-primary btn-sm">Submit Comment</button>
             </form>
         </div>
     </div>
@@ -113,7 +113,7 @@
         .then(response => response.json())
         .then(data => {
             document.getElementById('total-likes').textContent = data.total_likes;
-            this.textContent = data.liked ? '取消赞' : '点赞';
+            this.textContent = data.liked ? 'Unlike' : 'Like';
         });
     });
 

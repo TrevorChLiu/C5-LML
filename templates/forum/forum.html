@@ -38,12 +38,12 @@
       </div>
 
     <div class="container-fluid p-4">
-    <a href="{% url 'forum:post_create' forum.id %}" class="btn btn-primary mb-3">发新帖</a>
+    <a href="{% url 'forum:post_create' forum.id %}" class="btn btn-primary mb-3">New Post</a>
     
     <div class="sorting">
-        <strong>排序方式：</strong>
-        <a href="?order_by=-created_at" class="btn btn-outline-secondary btn-sm">最新</a>
-        <a href="?order_by=-views" class="btn btn-outline-secondary btn-sm">最热</a>
+        <strong>Sorted by: </strong>
+        <a href="?order_by=-created_at" class="btn btn-outline-secondary btn-sm">Newest</a>
+        <a href="?order_by=-views" class="btn btn-outline-secondary btn-sm">Hottest</a>
     </div>
 
     <div class="row">
@@ -54,7 +54,7 @@
                     {% if post.image %}
                     <img src="{{ post.image.url }}" class="card-img-top" alt="帖子图片">
                     {% else %}
-                    <div class="card-placeholder">无图片</div>
+                    <div class="card-placeholder">No Image</div>
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
@@ -62,8 +62,8 @@
                     </div>
                     <div class="card-footer text-muted">
                         <small>
-                            作者：{{ post.author.username }} | {{ post.created_at|date:"Y-m-d H:i" }}<br>
-                            浏览 {{ post.views }} | 点赞 {{ post.likes.count }}
+                            Author: {{ post.author.username }} | {{ post.created_at|date:"Y-m-d H:i" }}<br>
+                            {{ post.views }} Views | {{ post.likes.count }} Likes
                         </small>
                     </div>
                 </div>
@@ -77,23 +77,23 @@
             <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1&order_by={{ order_by }}">&laquo; 首页</a>
+                    <a class="page-link" href="?page=1&order_by={{ order_by }}">&laquo; Main page</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&order_by={{ order_by }}">上一页</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&order_by={{ order_by }}">Previous page</a>
                 </li>
                 {% endif %}
 
                 <li class="page-item disabled">
-                    <span class="page-link">第 {{ page_obj.number }} 页 / 共 {{ page_obj.paginator.num_pages }} 页</span>
+                    <span class="page-link">Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }} </span>
                 </li>
 
                 {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&order_by={{ order_by }}">下一页</a>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&order_by={{ order_by }}">Next page</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&order_by={{ order_by }}">末页 &raquo;</a>
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&order_by={{ order_by }}">Last page &raquo;</a>
                 </li>
                 {% endif %}
             </ul>

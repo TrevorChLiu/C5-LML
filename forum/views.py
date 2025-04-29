@@ -17,7 +17,7 @@ def categories(request):
             return redirect('forum:categories')
     else:
         form = ForumForm()
-    return render(request, 'forum/categories.html', {'form': form})
+    return render(request, 'forum/new_game.html', {'form': form})
 
 def all_games(request):
     games = Forum.get_all_forums_sorted_by_name
@@ -50,6 +50,15 @@ def forum(request, forum_id):
     paginator = Paginator(post_list, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    # Increment the popularity
+    viewed_forums = request.session.get('viewed_forums', [])
+    if forum_id not in viewed_forums:
+        forum.popularity += 1
+        forum.save(update_fields=["popularity"])
+        viewed_forums.append(forum_id)
+        request.session['viewed_forums'] = viewed_forums
+
     return render(request, 'forum/forum.html', {
         'forum': forum,
         'page_obj': page_obj,
@@ -79,7 +88,7 @@ def post_detail(request, forum_id, pk):
     
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return redirect('user:login')
+            return redirect('user:index')
         form = CommentForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)

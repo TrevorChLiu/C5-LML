@@ -79,7 +79,7 @@
 
           <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+              <h5 class="offcanvas-title" id="offcanvasRightLabel">Followers</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -120,7 +120,85 @@
             </div>
           </div>
           </div>
+        
+          <!-- The row for related posts -->
+          <div class="d-flex justify-content-center gap-3 mb-3">
 
+            <button class="btn cyan-700" type="button" data-bs-toggle="offcanvas" data-bs-target="#likeList" aria-controls="offcanvasWithBothOptions">Liked Posts</button>
+            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="likeList" aria-labelledby="offcanvasDarkLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkLabel">Liked Posts</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvasDark" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                
+                {% for post in user.get_liked_posts %}
+                <div class="card text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                    <a href="{% url 'forum:post_detail' post.forum.id post.pk %}" class="btn cyan-500">Detail</a>
+                  </div>
+                  <div class="card-footer text-body-secondary">
+                    {{ post.created_at }}
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div>
+            </div>
+
+            <button class="btn cyan-700" type="button" data-bs-toggle="offcanvas" data-bs-target="#myPosts" aria-controls="offcanvasWithBothOptions">My Posts</button>
+            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="myPosts" aria-labelledby="offcanvasDarkLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkLabel">My Posts</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvasDark" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                
+                {% for post in user.get_my_posts %}
+                <div class="card text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                    <a href="{% url 'forum:post_detail' post.forum.id post.pk %}" class="btn cyan-500">Detail</a>
+                  </div>
+                  <div class="card-footer text-body-secondary">
+                    {{ post.created_at }}
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div>
+            </div>
+
+            <button class="btn cyan-700" type="button" data-bs-toggle="offcanvas" data-bs-target="#myComments" aria-controls="offcanvasWithBothOptions">My Comments</button>
+            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="myComments" aria-labelledby="offcanvasDarkLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkLabel">My Comments</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvasDark" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                
+                {% for comment in user.get_my_comments %}
+                <div class="card text-center">
+                  <div class="card-header">
+                    Commenting on: {{ comment.post.title }}
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">{{ comment.content|truncatewords:20 }}</p>
+                    <a href="{% url 'forum:post_detail' comment.post.forum.id comment.post.pk %}" class="btn cyan-500">Detail</a>
+                  </div>
+                  <div class="card-footer text-body-secondary">
+                    {{ post.created_at }}
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div>
+            </div>
+
+          </div>
 
         <!-- Edit profile toggle section -->
         <p class="d-inline-flex gap-1">

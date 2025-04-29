@@ -4,11 +4,10 @@ from .models import Forum, Post, Comment
 class ForumForm(forms.ModelForm):
     class Meta:
         model = Forum
-        fields = ['key_art', 'name', 'price', 'popularity', 'description']
+        fields = ['key_art', 'name', 'price', 'description']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'popularity': forms.NumberInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
 
