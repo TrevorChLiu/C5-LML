@@ -20,7 +20,9 @@
             {% for game in results %}
               <div class="col-md-4 mb-4">
                 <div class="card h-100">
+                  <a href="{% url 'forum:forum' game.id %}">
                   <img src="{{ game.key_art.url }}" class="card-img-top" alt="{{ game.name }}">
+                </a>
                   <div class="card-body">
                     <h5 class="card-title">{{ game.name }}</h5>
                     <p class="card-text">{{ game.description|truncatewords:20 }}</p>
