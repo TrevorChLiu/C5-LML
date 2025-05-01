@@ -3,7 +3,7 @@
 Install Django5, Django-Boostrap5, and Pillow before you go:
 > pip install django\
 > pip install django-bootstrap5\
-> pip install pillow\
+> pip install pillow
 
 # Usage
 
