@@ -24,5 +24,5 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content', 'image']
         widgets = {
-            'content': forms.Textarea(attrs={'rows': 2, 'placeholder': '支持@提及功能'}),
+            'content': forms.Textarea(attrs={'rows': 2, 'placeholder': 'Supports @mention feature'}),
         }
