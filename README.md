@@ -1,8 +1,9 @@
 # Dependencies
 
-Install Django5 and Django-Boostrap5 before you go:
+Install Django5, Django-Boostrap5, and Pillow before you go:
 > pip install django\
 > pip install django-bootstrap5
+> pip install pillow
 
 # Usage
 
